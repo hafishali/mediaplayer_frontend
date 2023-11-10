@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { addAllcategory, deleteCategory, getAllcategory, getAvideo, updateCategory } from '../services/allAPI';
-import { Card, Col } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import Viewcard from './Viewcard';
 
 function Category() {
@@ -100,18 +100,29 @@ function Category() {
          
           
             {category?.length>0?
-            category.map((item)=>( <div className='d-flex justify-content-between p-3 rounded' droppable onDragOver={(e)=>dragOver(e)} onDrop={(e)=>videoDrop(e,item.id)} >
-            <h6 className='text-danger'>{item.categoryName}</h6>
-            <button onClick={()=>deletecategory(item.id)} className='btn btn-danger'><i class="fa-solid fa-trash"></i></button>
-            <Row>
-              <Col>
-              <Viewcard/>
-              </Col>
-            </Row>
-          
+            category?.map((item)=>(<div className='m-5 border border-secondary  rounded'>
+               <div className='d-flex justify-content-between  rounded align-items-center' droppable onDragOver={(e)=>dragOver(e)} onDrop={(e)=>videoDrop(e,item.id)} >
+              <h6 className='text-danger'>{item?.categoryName}</h6>
+              <button onClick={()=>deletecategory(item?.id)} className='btn btn-danger'><i class="fa-solid fa-trash"></i></button>
+              </div>
+             <div>
+               <Row>
+                <Col>
+                {item.allVideos?.length>0?
+                  item?.allVideos?.map(card=>(<Viewcard displayvideo={card} isPresent={true} />
+                  ))
+                    : <p>nothing to display</p>
+                    }
+    
+                </Col>
+    
+               </Row>
+             </div>
+             
+          </div>
 
 
-            </div>))
+            ))
            
           : <p>no category</p>
           }

@@ -3,10 +3,10 @@ import Card from 'react-bootstrap/Card';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { addtoHistory, deleteVideo } from '../services/allAPI';
+import { addtoHistory, deleteAvideocategory, deleteVideo } from '../services/allAPI';
 
 
-function Viewcard({displayvideo,setDeleteVideoStatus}) {
+function Viewcard({displayvideo,setDeleteVideoStatus,isPresent}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -35,6 +35,8 @@ function Viewcard({displayvideo,setDeleteVideoStatus}) {
     e.dataTransfer.setData("videoId",id)
   }
 
+ 
+
 
 
   return (
@@ -43,7 +45,11 @@ function Viewcard({displayvideo,setDeleteVideoStatus}) {
       <Card.Img variant="top" onClick={handleShow} src={displayvideo.img_url} style={{height:"350px"}} />
       <Card.Body className='d-flex justify-space-between'>
         <Card.Title className='mt-3'>{displayvideo.caption}</Card.Title>
-        <button type="button" onClick={()=>removeVideo(displayvideo?.id)} class="btn btn-danger ms-5"><i class="fa-solid fa-trash"></i></button>
+        { !isPresent?
+          <button type="button" onClick={()=>removeVideo(displayvideo?.id)} class="btn btn-danger ms-5"><i class="fa-solid fa-trash"></i></button> :
+          <button type="button" className="btn btn-warning ms-5"><i class="fa-solid fa-trash"></i></button>
+        }
+        
       </Card.Body>
     </Card>
     <Modal
